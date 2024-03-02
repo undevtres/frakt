@@ -380,8 +380,6 @@ mod tests {
             divergence_threshold_square: 4.0,
         };
 
-        let mandelbrot_fractal = fractal::Mandelbrot { /* Fields */ };
-
         // Test Julia set at a specific point
         let intensity_julia = networking::iterate_julia(&julia_fractal, 0.0, 0.0, 100);
         assert!(intensity_julia.count > 0.0); // Adjust assertion based on expected behavior
@@ -390,8 +388,6 @@ mod tests {
         let intensity_mandelbrot = networking::iterate_mandelbrot(0.0, 0.0, 100);
         assert!(intensity_mandelbrot.count > 0.0); // Adjust assertion based on expected behavior
     }
-
-    // Your tests will go here
 
     #[cfg(test)]
     mod tests {
@@ -423,8 +419,6 @@ mod tests {
                 c: Complex { re: -0.4, im: 0.6 },
                 divergence_threshold_square: 4.0,
             };
-
-            let mandelbrot_fractal = fractal::Mandelbrot { /* Fields */ };
 
             let intensity_julia = networking::iterate_julia(&julia_fractal, 0.0, 0.0, 100);
             assert!(intensity_julia.count > 0.0);

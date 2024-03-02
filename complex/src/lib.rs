@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::ops::{Add, Mul};
 
-#[derive(Debug, Serialize, Deserialize, Clone, Copy)]
+#[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
 pub struct Complex {
     pub re: f64,
     pub im: f64,

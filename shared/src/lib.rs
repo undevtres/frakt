@@ -185,6 +185,14 @@ pub mod networking {
                 imaginary_part,
                 task.max_iteration,
             ),
+            FractalDescriptor::NewtonRaphsonZ3(_) => {
+                let z_initial = Complex { re: real_part, im: imaginary_part };
+                iterate_newton(z_initial, task.max_iteration, 1e-6)
+            },
+            FractalDescriptor::NewtonRaphsonZ4(_) => {
+                let z_initial = Complex { re: real_part, im: imaginary_part };
+                iterate_newton(z_initial, task.max_iteration, 1e-6)
+            },
         }
     }
 
@@ -285,6 +293,33 @@ pub mod networking {
             count: iter as f32 / max_iteration as f32,
         }
     }
+
+    fn iterate_newton(
+        z_initial: Complex,
+        max_iteration: u32,
+        epsilon: f64,
+    ) -> PixelIntensity {
+        let mut z = z_initial;
+        let mut iter = 0;
+
+        while iter < max_iteration {
+            let p_zn = z.powi(3) - Complex { re: 1.0, im: 0.0 };
+            let dp_zn = Complex { re: 3.0, im: 0.0 } * z.powi(2);
+            let zn_next = z - (p_zn / dp_zn);
+
+            if (zn_next - z).norm_sqr() < epsilon {
+                break;
+            }
+
+            z = zn_next;
+            iter += 1;
+        }
+
+        PixelIntensity {
+            zn: z.norm() as f32,
+            count: iter as f32 / max_iteration as f32,
+        }
+    }
 }
 
 pub mod fractal {
@@ -297,6 +332,8 @@ pub mod fractal {
         Julia(Julia),
         Mandelbrot(Option<Mandelbrot>),
         IteratedSinZ(IteratedSinZ),
+        NewtonRaphsonZ3(Newton),
+        NewtonRaphsonZ4(Newton),
     }
 
     #[derive(Debug, Serialize, Deserialize)]
@@ -312,6 +349,9 @@ pub mod fractal {
     pub struct IteratedSinZ {
         pub c: Complex,
     }
+
+    #[derive(Debug, Serialize, Deserialize)]
+    pub struct Newton {}
 }
 
 pub mod image {

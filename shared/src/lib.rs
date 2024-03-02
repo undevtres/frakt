@@ -370,8 +370,6 @@ mod tests {
         assert_eq!((x, y), (400, 300));
 
         let (_real, _image) = networking::get_complex_from_coordinates(&range, x, y, &resolution);
-        // Assert that the complex number is correctly calculated.
-        // The exact values will depend on your implementation of get_complex_from_coordinates
     }
     #[test]
     fn test_fractal_intensity() {
@@ -382,11 +380,11 @@ mod tests {
 
         // Test Julia set at a specific point
         let intensity_julia = networking::iterate_julia(&julia_fractal, 0.0, 0.0, 100);
-        assert!(intensity_julia.count > 0.0); // Adjust assertion based on expected behavior
+        assert!(intensity_julia.count > 0.0);
 
         // Similarly, test Mandelbrot set at a specific point
         let intensity_mandelbrot = networking::iterate_mandelbrot(0.0, 0.0, 100);
-        assert!(intensity_mandelbrot.count > 0.0); // Adjust assertion based on expected behavior
+        assert!(intensity_mandelbrot.count > 0.0);
     }
 
     #[cfg(test)]
